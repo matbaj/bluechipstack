@@ -1,30 +1,38 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+def file_dir_or_symlink_exists?(path_to_file)
+  File.exist?(path_to_file) || File.symlink?(path_to_file)
+end
+
+  
 BOX_NAME = ENV['BOX_NAME'] || "ubuntu"
 BOX_URI = ENV['BOX_URI'] || "http://files.vagrantup.com/precise64.box"
 VF_BOX_URI = ENV['BOX_URI'] || "http://files.vagrantup.com/precise64_vmware_fusion.box"
 FORWARD_PORTS = ENV['FORWARD_PORTS']
 
 Vagrant::Config.run do |config|
+  if !file_dir_or_symlink_exists?("setuprc")
+    print "I can't find a setuprc file for the install.  Run './bluechip_openstack_setup.sh' first!\n\n"
+    exit
+  end
+ 
   # Setup virtual machine box in bridged mode. 
   # config.vm.network :bridged
   config.vm.network :hostonly, "10.0.10.150"
   config.vm.box = BOX_NAME
   config.vm.box_url = BOX_URI
-  #config.vm.forward_port 8443,443 
+  config.vm.forward_port 8443,443 
 
   # Provision and install new kernel if deployment was not done
   if Dir.glob("#{File.dirname(__FILE__)}/.vagrant/machines/default/*/id").empty?
-    pkg_cmd = "apt-get -y update;"
-    pkg_cmd << "apt-get -y install git;"
+    pkg_cmd = "apt-get -y install git;"
     pkg_cmd << "apt-get -y install curl;"
-    pkg_cmd << "apt-get -y install vim;"
-    pkg_cmd << "git clone https://github.com/bluechiptek/bluechipstack.git;"
-    pkg_cmd << "cp /vagrant/setuprc ~/bluechipstack/;"
-    pkg_cmd << "echo 'source ~/bluechipstack/setuprc' >> ~/.bash_profile;"
-    pkg_cmd << "curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-chef-server.sh | bash ;"
-    pkg_cmd << "curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-cookbooks.sh | bash;"
+    pkg_cmd << "git clone https://github.com/bluechiptek/bluechipstack.git /home/vagrant/bluechipstack/;"
+    pkg_cmd << "cp /vagrant/setuprc /home/vagrant/bluechipstack/;"
+    pkg_cmd << "echo 'source /home/vagrant/bluechipstack/setuprc' >> /home/vagrant/.profile;"
+    # pkg_cmd << "curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-chef-server.sh | bash ;"
+    # pkg_cmd << "curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-cookbooks.sh | bash;"
     config.vm.provision :shell, :inline => pkg_cmd
   end
 end

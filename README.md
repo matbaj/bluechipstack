@@ -3,7 +3,7 @@ It's been over a year since I published Install OpenStack in 10 Minutes guide.  
 
 Before we drop in and begin our exciting journey down the virtualized rabbit hole, I'd like to thank [Blue Chip Tek](http://bluechiptek.com) for providing hardware setup assistance, [Dell Computers](http://dell.com/) for donating the test hardware, and the awesome folks at [Rackspace](http://rackspace.com/) for writing and supporting the Chef scripts which are used for the bulk of the setup process.
 
-The new install scripts are [available for download](http://github.com/bluechiptek) from Blue Chip's Github account.  You can familiarize yourself with the install process by watching the screencast below.
+The new install scripts are [available for download](https://github.com/bluechiptek/bluechipstack) from Blue Chip's Github account.  You can familiarize yourself with the install process by watching the screencast below.
 
 INSERT VIDEO HERE
 
@@ -21,7 +21,7 @@ Start a terminal on your machine and make sure you have *git* installed.  If you
     
 Next, clone the scripts from the Blue Chip repo:
 
-    git clone http://foo.bar
+    git clone https://github.com/bluechiptek/bluechipstack.git
     
 Now move into the scripts directory:
 
@@ -30,7 +30,7 @@ Now move into the scripts directory:
 *Note: If you are using a Windows box for hosting the Vagrant image, you'll need to install [Cygwin](http://www.cygwin.com/) so you can run the install scripts.*
     
 ### Configuration
-The setup script will prompt you for a few variables, including node IPs, the number of nodes and the network you'll be using for instances.  Start the install script by typing the following:
+A setup script is provided which will prompt you for a few variables, including node IPs, the number of nodes and the network you'll be using for instances.  Start the setup script by typing the following:
 
     ./bluechip_openstack_setup.sh
     
