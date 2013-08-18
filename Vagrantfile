@@ -13,7 +13,7 @@ FORWARD_PORTS = ENV['FORWARD_PORTS']
 
 Vagrant::Config.run do |config|
   if !file_dir_or_symlink_exists?("setuprc")
-    print "I can't find a setuprc file for the install.  Run './bluechip_openstack_setup.sh' first!\n\n"
+    print "A setuprc file for the install is missing.  Run './bluechip_openstack_setup.sh' to generate one.\n\n"
     exit
   end
  
@@ -31,8 +31,8 @@ Vagrant::Config.run do |config|
     pkg_cmd << "git clone https://github.com/bluechiptek/bluechipstack.git /home/vagrant/bluechipstack/;"
     pkg_cmd << "cp /vagrant/setuprc /home/vagrant/bluechipstack/;"
     pkg_cmd << "echo 'source /home/vagrant/bluechipstack/setuprc' >> /home/vagrant/.profile;"
-    # pkg_cmd << "curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-chef-server.sh | bash ;"
-    # pkg_cmd << "curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-cookbooks.sh | bash;"
+    pkg_cmd << "curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-chef-server.sh | bash ;"
+    pkg_cmd << "curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-cookbooks.sh | bash;"
     config.vm.provision :shell, :inline => pkg_cmd
   end
 end

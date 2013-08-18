@@ -26,21 +26,25 @@ num_nodes=$NUMBER_NODES
 
 echo "##########################################################################################################################"
 echo;
-echo "Use the folowing ssh commands below to ssh to your target nodes:" 
+
+# generate a keyfile
+mkdir /root/.ssh/
+ssh-keygen -N "" -f /root/.ssh/id_rsa
+
+echo;
+echo "A ssh key has been generated to copy to the nodes.  Use '"$ROOT_PASSWD"' for each copy prompt below."
 echo;
 
-# loop through config's machines and add to /etc/hosts
+# loop through config's nodes and push out keyfile
 for (( x=1; x<=$num_nodes; x++ ))
   do
     host="NODE_"$x"_HOSTNAME"
-    ip="NODE_"$x"_IP"
-    echo "${!ip}	${!host}" >> /etc/hosts
-    echo "ssh ${!host}"
+    ssh-copy-id root@${!host}
   done
 
+# loop through the nodes and install chef_client
+
 echo;
-echo "For each node run a 'sudo passwd root' and then enter '"$ROOT_PASSWD"' for the root password."
-echo; 
-echo "When you are done changing passwords for the nodes you may run './bluechip_openstack_push_client.sh' to continue."
+echo "When you are done pushing keys to the nodes you may run './bluechip_openstack_push_keys.sh' to continue."
 echo;
 echo "##########################################################################################################################"
