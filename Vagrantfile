@@ -5,7 +5,6 @@ def file_dir_or_symlink_exists?(path_to_file)
   File.exist?(path_to_file) || File.symlink?(path_to_file)
 end
 
-  
 BOX_NAME = ENV['BOX_NAME'] || "ubuntu"
 BOX_URI = ENV['BOX_URI'] || "http://files.vagrantup.com/precise64.box"
 VF_BOX_URI = ENV['BOX_URI'] || "http://files.vagrantup.com/precise64_vmware_fusion.box"
@@ -19,18 +18,20 @@ Vagrant::Config.run do |config|
  
   # Setup virtual machine box in bridged mode. 
   # config.vm.network :bridged
-  config.vm.network :hostonly, "10.0.10.150"
+  config.vm.network :hostonly, ENV['CHEF_IP'] || "10.0.10.150"
   config.vm.box = BOX_NAME
+  config.vm.host_name = "chef-server"
   config.vm.box_url = BOX_URI
-  config.vm.forward_port 8443,443 
 
   # Provision and install new kernel if deployment was not done
   if Dir.glob("#{File.dirname(__FILE__)}/.vagrant/machines/default/*/id").empty?
+    config.vm.provision :shell, :path => "bluechip_openstack_done.sh"
     pkg_cmd = "apt-get -y install git;"
     pkg_cmd << "apt-get -y install curl;"
-    pkg_cmd << "git clone https://github.com/bluechiptek/bluechipstack.git /home/vagrant/bluechipstack/;"
-    pkg_cmd << "cp /vagrant/setuprc /home/vagrant/bluechipstack/;"
-    pkg_cmd << "echo 'source /home/vagrant/bluechipstack/setuprc' >> /home/vagrant/.profile;"
+    pkg_cmd << "git clone https://github.com/bluechiptek/bluechipstack.git /root/bluechipstack/;"
+    pkg_cmd << "cp /vagrant/setuprc /root/bluechipstack/;"
+    pkg_cmd << "echo 'source /root/bluechipstack/setuprc' >> /home/vagrant/.profile;"
+    pkg_cmd << "echo 'source /root/bluechipstack/setuprc' >> /root/.profile;"
     pkg_cmd << "curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-chef-server.sh | bash ;"
     pkg_cmd << "curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-cookbooks.sh | bash;"
     config.vm.provision :shell, :inline => pkg_cmd
@@ -67,3 +68,4 @@ if !FORWARD_PORTS.nil?
     end
   end
 end
+

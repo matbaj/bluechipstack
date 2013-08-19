@@ -36,6 +36,10 @@ for (( x=1; x<=$num_nodes; x++ ))
     echo "export NODE_"$x"_IP="$REPLY >> setuprc
   done
 
+# chef server info
+read -p "Enter the IP address to be used for the Chef server: "
+echo "export CHEF_IP="$REPLY >> setuprc
+
 # making a unique token for this install
 if [ -a "/sbin/md5" ]
 then
