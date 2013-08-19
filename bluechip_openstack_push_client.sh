@@ -35,6 +35,14 @@ echo;
 echo "A ssh key has been generated to copy to the nodes.  Use '"$ROOT_PASSWD"' for each copy prompt below."
 echo;
 
+# loop through config's machines and add to /etc/hosts
+for (( x=1; x<=$num_nodes; x++ ))
+  do
+    host="NODE_"$x"_HOSTNAME"
+    ip="NODE_"$x"_IP"
+    echo "${!ip}	${!host}" >> /etc/hosts
+  done
+
 # loop through config's nodes and push out keyfile
 for (( x=1; x<=$num_nodes; x++ ))
   do
