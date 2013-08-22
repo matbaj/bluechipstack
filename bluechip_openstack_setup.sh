@@ -64,3 +64,6 @@ echo "Setup configuration complete.  Continue the setup by doing a 'vagrant up'.
 echo;
 echo "#############################################################################################################"
 echo;
+
+# lastly, source that sucker
+. ./setuprc

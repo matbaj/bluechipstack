@@ -18,7 +18,7 @@ Vagrant::Config.run do |config|
  
   # Setup virtual machine box in bridged mode. 
   # config.vm.network :bridged
-  config.vm.network :hostonly, ENV['CHEF_IP'] || "10.0.10.150"
+  config.vm.network :hostonly, ENV['CHEF_IP'] || "10.0.1.51"
   config.vm.box = BOX_NAME
   config.vm.host_name = "chef-server"
   config.vm.box_url = BOX_URI
