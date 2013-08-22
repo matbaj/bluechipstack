@@ -49,16 +49,30 @@ Once the setup script finishes, you will have a *setuprc* file that will roughly
     move C:\downloads\bluechipstack\setuprc.example C:\downloads\bluechipstack\setuprc
   
 ### Start the Chef Server
-The Chef server is built and started by the Vagrant manager.  The initial provisioning process should take 5-10 minutes on a fast connection.  Start the Chef server by doing the following:
+The Chef server is built and started by the Vagrant manager.  The initial provisioning process should take 5-10 minutes on a fast connection and is started by typing:
 
     vagrant up
     
-Once the Chef server is provisioned, you can connect to it by doing the following:
+Once the Chef server is provisioned, you can ssh into it by typing:
 
     vagrant ssh
-    
-### Configure the Node's Logins
 
+Once logged into the server, become root and change into the *bluechipstack* directory:
+
+    sudo su
+    cd /root/bluechipstack
     
+Finally, run the install script to finish provisioning:
+
+    ./openstack_install.sh
+    
+### Configuring the Nodes
+Each of the nodes you'll be installing to needs to be running [Ubuntu Server 12.04](http://www.ubuntu.com/download/server) on it and be connected to your local network.  *Note: You can use virtual machines on your laptop or desktop to do a demo install, but the VMs need to be configured with bridged interfaces and share the same IP block as your local network.*
+
+
+
+
+
+
 
 

@@ -38,15 +38,15 @@ echo "##########################################################################
 echo; 
 echo "The following steps must be done manually for each node in your cluster.  The commands are listed below for convenience."
 echo; 
-echo "1. Do a ssh to each of the "$num_nodes" nodes and set the root password to: '"$ROOT_PASSWD"':"
+echo "1. ssh to each of the "$num_nodes" nodes and set a temporary root password: '"$ROOT_PASSWD"':"
 echo;
 for (( x=1; x<=$num_nodes; x++ ))
   do
     host="NODE_"$x"_HOSTNAME"
     ip="NODE_"$x"_IP"
-    echo "ssh ${!host}"
-    echo "sudo passwd root"
-    echo "exit"
+    echo "    ssh user@${!host}"
+    echo "    sudo passwd root"
+    echo "    exit"
     echo; 
   done
 echo;
@@ -57,20 +57,23 @@ for (( x=1; x<=$num_nodes; x++ ))
   do
     host="NODE_"$x"_HOSTNAME"
     ip="NODE_"$x"_IP"
-    echo "ssh-copy-id root@"${!host}
+    echo "    ssh-copy-id root@"${!host}
   done
 echo;
 echo;
-echo "3. Copy the host entry file for the nodes and paste them at the bottom of each node's /etc/hosts file: "
+echo "3. Update the "$num_nodes" node's /etc/hosts file and remove root's temporary password: "
 echo;
 for (( x=1; x<=$num_nodes; x++ ))
   do
     host="NODE_"$x"_HOSTNAME"
     ip="NODE_"$x"_IP"
-    echo "scp /tmp/.node_hosts root@"${!host}":/root/.node_hosts" 
-    echo "ssh root@"${!host}" cat /root/.node_hosts >> /etc/hosts"
-    echo "ssh root@"${!host}" rm /root/.node_hosts"
+    echo "    scp /tmp/.node_hosts root@"${!host}":/root/.node_hosts" 
+    echo "    ssh root@"${!host}" cat /root/.node_hosts >> /etc/hosts"
+    echo "    ssh root@"${!host}" rm /root/.node_hosts"
+    echo "    ssh root@"${!host}" passwd -l root"
     echo; 
   done
+echo;
+echo "When you are done with the above steps, run './openstack_deploy.sh'."
 echo;
 echo "##########################################################################################################################"

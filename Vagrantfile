@@ -12,7 +12,7 @@ FORWARD_PORTS = ENV['FORWARD_PORTS']
 
 Vagrant::Config.run do |config|
   if !file_dir_or_symlink_exists?("setuprc")
-    print "A setuprc file for the install is missing.  Run './bluechip_openstack_setup.sh' to generate one.\n\n"
+    print "A setuprc file for the install is missing.  Run './openstack_setup.sh' to generate one.\n\n"
     exit
   end
  
@@ -24,7 +24,7 @@ Vagrant::Config.run do |config|
 
   # Provision and install new kernel if deployment was not done
   if Dir.glob("#{File.dirname(__FILE__)}/.vagrant/machines/default/*/id").empty?
-    config.vm.provision :shell, :path => "bluechip_openstack_provision.sh"
+    config.vm.provision :shell, :path => "openstack_provision.sh"
   end
 end
 
