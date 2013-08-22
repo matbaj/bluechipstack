@@ -61,8 +61,6 @@ fi
 #PRIMARY_INTERFACE=$(ip route list match 0.0.0.0 | awk 'NR==1 {print $5}')
 PRIMARY_INTERFACE=eth1
 MY_IP=$(ip addr show dev ${PRIMARY_INTERFACE} | awk 'NR==3 {print $2}' | cut -d '/' -f1)
-echo $MY_IP;
-exit;
 CHEF_UNIX_USER=${CHEF_UNIX_USER:-root}
 
 # due to http://tickets.opscode.com/browse/CHEF-3849 CHEF_FE_PORT is not used yet
