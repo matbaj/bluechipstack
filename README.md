@@ -3,12 +3,12 @@ It's been over a year since I published the [Install OpenStack in 10 Minutes](ht
 
 Before we drop in and begin our exciting journey down the virtualized rabbit hole, I'd like to thank [Blue Chip Tek](http://bluechiptek.com) for providing hardware setup assistance, [Dell Computers](http://dell.com/) for donating the test hardware, and the awesome folks at [Rackspace](http://rackspace.com/) for writing and supporting the Chef scripts which are used for the bulk of the setup process.
 
-The new install scripts are [available for download](https://github.com/bluechiptek/bluechipstack) from Blue Chip's Github account.  You can familiarize yourself with the install process by watching the screencast below.
+The new install scripts are [available for download](https://github.com/bluechiptek/bluechipstack) from Github.  It is recommended you familiarize yourself with the install process by watching the screencast below.
 
 INSERT VIDEO HERE
 
 ### Prerequisites for Install
-The new install process uses a Chef server running inside Vagrant instance on your personal machine to provision the servers for your OpenStack cluster.  If you already have Vagrant installed, you can skip to the section below and begin downloading the scripts.
+The new install process uses a Chef server running inside a Vagrant instance on a deskto/laptop to provision the nodes of an OpenStack cluster.  If you already have Vagrant installed, you can skip to the download script section below.
 
 If you don't have Vagrant installed yet, you'll need to download both [Vagrant](http://downloads.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads). To save a bit of time, here are the links to Vagrant 1.2.7 for [Windows](http://files.vagrantup.com/packages/7ec0ee1d00a916f80b109a298bab08e391945243/Vagrant_1.2.7.msi)/[OSX](http://files.vagrantup.com/packages/7ec0ee1d00a916f80b109a298bab08e391945243/Vagrant-1.2.7.dmg) and  for VirtualBox 4.2.16 for [Windows](http://download.virtualbox.org/virtualbox/4.2.16/VirtualBox-4.2.16-86992-Win.exe)/[OSX](http://download.virtualbox.org/virtualbox/4.2.16/VirtualBox-4.2.16-86992-OSX.dmg).
 
@@ -19,7 +19,7 @@ Start a terminal on your machine and make sure you have *git* installed.  If you
 
     mkdir openstack; cd openstack
     
-Next, clone the scripts from the Blue Chip repo:
+Next, clone the scripts from the repo:
 
     git clone https://github.com/bluechiptek/bluechipstack.git
     
@@ -44,12 +44,13 @@ Once the setup script finishes, you will have a *setuprc* file that will roughly
     export CHEF_IP=10.0.10.101
     export ROOT_PASSWD=d304cdf4f456a36afc8d5adace011029
     
-*Note: If you are using a Windows box for hosting the Vagrant image, you won't be able to run the **openstack_setup.sh** script.  Instead, move the **setuprc.example** file provided to **setuprc** and edit as needed with your preferred editor:*
+*Note: If you are using a Windows box for hosting the Vagrant image, you won't be able to run the **openstack_setup.sh** script.  Instead, move the **setuprc.example** file provided to **setuprc** and edit as needed:*
 
     move C:\downloads\bluechipstack\setuprc.example C:\downloads\bluechipstack\setuprc
+    edit C:\downloads\bluechipstack\setuprc
   
 ### Start the Chef Server
-The Chef server is built and started by the Vagrant manager.  The initial provisioning process should take 5-10 minutes on a fast connection and is started by typing:
+The Chef server is built and started by the Vagrant manager and should take 5-10 minutes to build on a fast box and connection.  Start the server by typing:
 
     vagrant up
     
@@ -62,17 +63,34 @@ Once logged into the server, become root and change into the *bluechipstack* dir
     sudo su
     cd /root/bluechipstack
     
-Finally, run the install script to finish provisioning:
+Now run the install script to print the node configuration commands:
 
     ./openstack_install.sh
     
 ### Configuring the Nodes
-Each of the nodes you'll be installing to needs to be running [Ubuntu Server 12.04](http://www.ubuntu.com/download/server) on it and be connected to your local network.  *Note: You can use virtual machines on your laptop or desktop to do a demo install, but the VMs need to be configured with bridged interfaces and share the same IP block as your local network.*
+Each of the nodes you'll be installing to needs to be running [Ubuntu Server 12.04](http://www.ubuntu.com/download/server) on it, be connected to your local network, and have the IPs you specified earlier. The install script will dump out instructions and commands you can cut and paste to save time.  *Be sure to execute these commands from the Chef server!* 
 
+**1. Begin by setting a root password on each node:**
 
+    ssh user@hostname
+    sudo passwd root
+    exit
+    
+*Note: You'll need to replace the **user** and **hostname** and repeat these steps for each and every node you specified in the setup.  For each node, you will be prompted for your user password twice and the new root password twice.*
 
+**2. Next, push the root key to each node:**
 
+    ssh-copy-id root@hostname
 
+*Note: Again, you will need to replace **hostname** and repeat this for each node.  You will be prompted by the nodes for the root password you set in step 1 above.*
 
+**3. Finally, update the /etc/hosts file and clear the root password for each node:**
 
+    scp /tmp/.node_hosts root@hostname:/root/.node_hosts
+    ssh root@hostname cat /root/.node_hosts >> /etc/hosts
+    ssh root@hostname rm /root/.node_hosts
+    ssh root@hostname passwd -l root
+    
+*Note: And, once again, replace the **hostname** and repeat for each node.  No passwords required this time!*
 
+### Provision the Nodes
