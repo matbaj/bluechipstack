@@ -1,5 +1,5 @@
 ## Installing OpenStack Grizzly in 15 Minutes
-It's been over a year since I published Install OpenStack in 10 Minutes guide.  A year and nearly 10K installs later, I'm pleased to announce the next chapter in the OpenStack install saga.
+It's been over a year since I published the [Install OpenStack in 10 Minutes](http://www.stackgeek.com/guides/gettingstarted.html) guide.  A year and nearly 10K installs later, I'm pleased to announce an even easier way to install OpenStack Grizzly.
 
 Before we drop in and begin our exciting journey down the virtualized rabbit hole, I'd like to thank [Blue Chip Tek](http://bluechiptek.com) for providing hardware setup assistance, [Dell Computers](http://dell.com/) for donating the test hardware, and the awesome folks at [Rackspace](http://rackspace.com/) for writing and supporting the Chef scripts which are used for the bulk of the setup process.
 
@@ -27,12 +27,10 @@ Now move into the scripts directory:
 
     cd bluechipstack
     
-*Note: If you are using a Windows box for hosting the Vagrant image, you'll need to install [Cygwin](http://www.cygwin.com/) so you can run the install scripts.  If you are using OSX, you don't have to do anything other than run the scripts.*
-    
 ### Create the Setup File
 The setup script provided in the repository will prompt you for a few variables, including the number of nodes for the cluster, the node IPs and names, and the network you'll be using for instances.  Start the setup script by typing the following:
 
-    ./bluechip_openstack_setup.sh
+    ./openstack_setup.sh
     
 Once the setup script finishes, you will have a *setuprc* file that will roughly look like:
 
@@ -45,6 +43,10 @@ Once the setup script finishes, you will have a *setuprc* file that will roughly
     export NODE_3_IP=10.0.10.104
     export CHEF_IP=10.0.10.101
     export ROOT_PASSWD=d304cdf4f456a36afc8d5adace011029
+    
+*Note: If you are using a Windows box for hosting the Vagrant image, you won't be able to run the **openstack_setup.sh** script.  Instead, move the **setuprc.example** file provided to **setuprc** and edit as needed with your preferred editor:
+
+    move C:\downloads\bluechipstack\setuprc.example C:\downloads\bluechipstack\setuprc
   
 ### Start the Chef Server
 The Chef server is built and started by the Vagrant manager.  The initial provisioning process should take 5-10 minutes on a fast connection.  Start the Chef server by doing the following:
