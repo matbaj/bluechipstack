@@ -44,7 +44,7 @@ Once the setup script finishes, you will have a *setuprc* file that will roughly
     export CHEF_IP=10.0.10.101
     export ROOT_PASSWD=d304cdf4f456a36afc8d5adace011029
     
-*Note: If you are using a Windows box for hosting the Vagrant image, you won't be able to run the **openstack_setup.sh** script.  Instead, move the **setuprc.example** file provided to **setuprc** and edit as needed with your preferred editor:
+*Note: If you are using a Windows box for hosting the Vagrant image, you won't be able to run the **openstack_setup.sh** script.  Instead, move the **setuprc.example** file provided to **setuprc** and edit as needed with your preferred editor:*
 
     move C:\downloads\bluechipstack\setuprc.example C:\downloads\bluechipstack\setuprc
   
