@@ -24,23 +24,56 @@ fi
 
 num_nodes=$NUMBER_NODES
 
-echo "##########################################################################################################################"
-echo;
-echo "Use the folowing ssh commands below to ssh to your target nodes:" 
-echo;
-
 # loop through config's machines and add to /etc/hosts
 for (( x=1; x<=$num_nodes; x++ ))
   do
     host="NODE_"$x"_HOSTNAME"
     ip="NODE_"$x"_IP"
     echo "${!ip}	${!host}" >> /etc/hosts
-    echo "ssh ${!host}"
+    echo "${!ip}	${!host}" >> /tmp/.node_hosts
   done
 
+echo "##########################################################################################################################"
 echo;
-echo "For each node run a 'sudo passwd root' and then enter '"$ROOT_PASSWD"' for the root password."
+echo "Generating a key for root..." 
+# generate a keyfile
+mkdir /root/.ssh/ 1>&2 2>/dev/null
+ssh-keygen -N "" -f /root/.ssh/id_rsa 
+echo;
 echo; 
-echo "When you are done changing passwords for the nodes you may run './bluechip_openstack_push_client.sh' to continue."
+echo "You need to do some manual configuration now.  Be sure to follow each step below on each node!"
+echo; 
+echo "1. Do a ssh to each of the "$num_nodes" nodes and set the root password to: '"$ROOT_PASSWD"':"
+echo;
+for (( x=1; x<=$num_nodes; x++ ))
+  do
+    host="NODE_"$x"_HOSTNAME"
+    ip="NODE_"$x"_IP"
+    echo "ssh ${!host}"
+    echo "sudo passwd root"
+    echo "exit"
+    echo; 
+  done
+echo;
+echo "2. Push the keys to each of the "$num_nodes" nodes:"
+echo;
+for (( x=1; x<=$num_nodes; x++ ))
+  do
+    host="NODE_"$x"_HOSTNAME"
+    ip="NODE_"$x"_IP"
+    echo "ssh-copy-id root@"${!host}
+  done
+echo;
+echo "3. Copy the host entry file for the nodes and paste them at the bottom of each node's /etc/hosts file: "
+echo;
+for (( x=1; x<=$num_nodes; x++ ))
+  do
+    host="NODE_"$x"_HOSTNAME"
+    ip="NODE_"$x"_IP"
+    echo "scp /tmp/.node_hosts root@"${!host}":/root/.node_hosts" 
+    echo "ssh root@"${!host}" cat /root/.node_hosts >> /etc/hosts"
+    echo "ssh root@"${!host}" rm /root/.node_hosts"
+    echo; 
+  done
 echo;
 echo "##########################################################################################################################"

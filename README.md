@@ -27,18 +27,36 @@ Now move into the scripts directory:
 
     cd bluechipstack
     
-*Note: If you are using a Windows box for hosting the Vagrant image, you'll need to install [Cygwin](http://www.cygwin.com/) so you can run the install scripts.*
+*Note: If you are using a Windows box for hosting the Vagrant image, you'll need to install [Cygwin](http://www.cygwin.com/) so you can run the install scripts.  If you are using OSX, you don't have to do anything other than run the scripts.*
     
-### Configuration
-A setup script is provided which will prompt you for a few variables, including node IPs, the number of nodes and the network you'll be using for instances.  Start the setup script by typing the following:
+### Create the Setup File
+The setup script provided in the repository will prompt you for a few variables, including the number of nodes for the cluster, the node IPs and names, and the network you'll be using for instances.  Start the setup script by typing the following:
 
     ./bluechip_openstack_setup.sh
     
-Once the setup script finishes, your environment will have a set of variables that will roughly look like:
+Once the setup script finishes, you will have a *setuprc* file that will roughly look like:
 
-    FOO=this 
-
+    export NUMBER_NODES=3
+    export NODE_1_HOSTNAME=nero
+    export NODE_1_IP=10.0.10.102
+    export NODE_2_HOSTNAME=spartacus
+    export NODE_2_IP=10.0.10.103
+    export NODE_3_HOSTNAME=invictus
+    export NODE_3_IP=10.0.10.104
+    export CHEF_IP=10.0.10.101
+    export ROOT_PASSWD=d304cdf4f456a36afc8d5adace011029
   
+### Start the Chef Server
+The Chef server is built and started by the Vagrant manager.  The initial provisioning process should take 5-10 minutes on a fast connection.  Start the Chef server by doing the following:
 
+    vagrant up
+    
+Once the Chef server is provisioned, you can connect to it by doing the following:
+
+    vagrant ssh
+    
+### Configure the Node's Logins
+
+    
 
 
