@@ -24,21 +24,18 @@ fi
 
 num_nodes=$NUMBER_NODES
 
-# grab the chef client install script
-curl -skS https://raw.github.com/rcbops/support-tools/master/chef-install/install-chef-client.sh > install-chef-client.sh
-chmod +x install-chef-client.sh
-
 echo "##########################################################################################################################"
 echo; 
 echo "Please wait while the "$num_nodes" nodes are being configured..."
 echo; 
 echo "##########################################################################################################################"
+echo; 
 
 # loop through config's machines and run against each 
 rm -f /tmp/.node_hosts
 for (( x=1; x<=$num_nodes; x++ ))
   do
     host="NODE_"$x"_HOSTNAME"
-    ./install-chef-client.sh ${!host}
+    ./openstack_chef_client.sh ${!host}
   done
 
