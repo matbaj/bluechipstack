@@ -68,9 +68,9 @@ for (( x=1; x<=$num_nodes; x++ ))
     host="NODE_"$x"_HOSTNAME"
     ip="NODE_"$x"_IP"
     echo "    scp /tmp/.node_hosts root@"${!host}":/root/.node_hosts" 
-    echo "    ssh root@"${!host}" cat /root/.node_hosts >> /etc/hosts"
-    echo "    ssh root@"${!host}" rm /root/.node_hosts"
-    echo "    ssh root@"${!host}" passwd -l root"
+    echo "    ssh root@"${!host}" 'cat /root/.node_hosts >> /etc/hosts'"
+    echo "    ssh root@"${!host}" 'rm /root/.node_hosts'"
+    echo "    ssh root@"${!host}" 'passwd -l root."
     echo; 
   done
 echo;
