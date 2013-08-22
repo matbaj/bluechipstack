@@ -31,6 +31,8 @@ chmod +x install-chef-client.sh
 echo "##########################################################################################################################"
 echo; 
 echo "Please wait while the "$num_nodes" nodes are being configured..."
+echo; 
+echo "##########################################################################################################################"
 
 # loop through config's machines and run against each 
 rm -f /tmp/.node_hosts
@@ -40,5 +42,3 @@ for (( x=1; x<=$num_nodes; x++ ))
     ./install-chef-client.sh ${!host}
   done
 
-echo;
-echo "##########################################################################################################################"
