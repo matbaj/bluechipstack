@@ -54,6 +54,8 @@ The Chef server is built and started by the Vagrant manager and should take 5-10
 
     vagrant up
     
+*Note: If you have multiple network interfaces, you will be prompted to add one to the bridge that is created.*
+
 Once the Chef server is provisioned, you can ssh into it by typing:
 
     vagrant ssh
