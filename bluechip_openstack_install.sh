@@ -25,6 +25,7 @@ fi
 num_nodes=$NUMBER_NODES
 
 # loop through config's machines and add to /etc/hosts
+rm -f /tmp/.node_hosts
 for (( x=1; x<=$num_nodes; x++ ))
   do
     host="NODE_"$x"_HOSTNAME"
@@ -34,14 +35,8 @@ for (( x=1; x<=$num_nodes; x++ ))
   done
 
 echo "##########################################################################################################################"
-echo;
-echo "Generating a key for root..." 
-# generate a keyfile
-mkdir /root/.ssh/ 1>&2 2>/dev/null
-ssh-keygen -N "" -f /root/.ssh/id_rsa 
-echo;
 echo; 
-echo "You need to do some manual configuration now.  Be sure to follow each step below on each node!"
+echo "The following steps must be done manually for each node in your cluster.  The commands are listed below for convenience."
 echo; 
 echo "1. Do a ssh to each of the "$num_nodes" nodes and set the root password to: '"$ROOT_PASSWD"':"
 echo;
@@ -55,7 +50,8 @@ for (( x=1; x<=$num_nodes; x++ ))
     echo; 
   done
 echo;
-echo "2. Push the keys to each of the "$num_nodes" nodes:"
+echo;
+echo "2. Push the ssh key to each of the "$num_nodes" nodes:"
 echo;
 for (( x=1; x<=$num_nodes; x++ ))
   do
@@ -63,6 +59,7 @@ for (( x=1; x<=$num_nodes; x++ ))
     ip="NODE_"$x"_IP"
     echo "ssh-copy-id root@"${!host}
   done
+echo;
 echo;
 echo "3. Copy the host entry file for the nodes and paste them at the bottom of each node's /etc/hosts file: "
 echo;
