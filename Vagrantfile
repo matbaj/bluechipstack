@@ -17,23 +17,14 @@ Vagrant::Config.run do |config|
   end
  
   # Setup virtual machine box in bridged mode. 
-  # config.vm.network :bridged
-  config.vm.network :hostonly, ENV['CHEF_IP'] || "10.0.1.51"
+  config.vm.network :bridged , ENV['CHEF_IP'] 
   config.vm.box = BOX_NAME
   config.vm.host_name = "chef-server"
   config.vm.box_url = BOX_URI
 
   # Provision and install new kernel if deployment was not done
   if Dir.glob("#{File.dirname(__FILE__)}/.vagrant/machines/default/*/id").empty?
-    pkg_cmd = "apt-get -y install git;"
-    pkg_cmd << "apt-get -y install curl;"
-    pkg_cmd << "ssh-keygen -N "" -f /root/.ssh/id_rsa"
-    pkg_cmd << "git clone https://github.com/bluechiptek/bluechipstack.git /root/bluechipstack/;"
-    pkg_cmd << "cp /vagrant/setuprc /root/bluechipstack/;"
-    pkg_cmd << "curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-chef-server.sh | bash ;"
-    pkg_cmd << "curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-cookbooks.sh | bash;"
-    config.vm.provision :shell, :inline => pkg_cmd
-    config.vm.provision :shell, :path => "bluechip_openstack_done.sh"
+    config.vm.provision :shell, :path => "bluechip_openstack_provision.sh"
   end
 end
 
