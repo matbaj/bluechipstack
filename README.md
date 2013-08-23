@@ -22,7 +22,7 @@ If you don't have Vagrant installed on your computer (desktop/laptop) yet, you'l
 Double click each package to run through the installation on your local machine.
 
 ### Download the Install Scripts
-Start a terminal on your machine and make sure you have *git* installed.  If you don't, you can [download it here](http://git-scm.com/downloads).  Make and move yourself into a directory called *openstack*:
+Start a terminal on your local machine and make sure you have *git* installed.  If you don't, you can [download it here](http://git-scm.com/downloads).  Make and move yourself into a directory called *openstack*:
 
     mkdir openstack; cd openstack
     
