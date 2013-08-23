@@ -61,19 +61,6 @@ for (( x=1; x<=$num_nodes; x++ ))
   done
 echo;
 echo;
-echo "3. Update the "$num_nodes" node's /etc/hosts file and remove root's temporary password: "
-echo;
-for (( x=1; x<=$num_nodes; x++ ))
-  do
-    host="NODE_"$x"_HOSTNAME"
-    ip="NODE_"$x"_IP"
-    echo "    scp /tmp/.node_hosts root@"${!host}":/root/.node_hosts" 
-    echo "    ssh root@"${!host}" 'cat /root/.node_hosts >> /etc/hosts'"
-    echo "    ssh root@"${!host}" 'rm /root/.node_hosts'"
-    echo "    ssh root@"${!host}" 'passwd -l root'"
-    echo; 
-  done
-echo;
 echo "When you are done with the above steps, run './openstack_deploy.sh'."
 echo;
 echo "##########################################################################################################################"

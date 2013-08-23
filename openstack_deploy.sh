@@ -31,6 +31,17 @@ echo;
 echo "##########################################################################################################################"
 echo; 
 
+# tend to /etc/hosts + remove root's passwd
+for (( x=1; x<=$num_nodes; x++ ))
+  do
+    host="NODE_"$x"_HOSTNAME"
+    ip="NODE_"$x"_IP"
+    scp /tmp/.node_hosts root@"${!host}":/root/.node_hosts
+    ssh root@"${!host}" 'cat /root/.node_hosts >> /etc/hosts'
+    ssh root@"${!host}" 'rm /root/.node_hosts'
+    ssh root@"${!host}" 'passwd -l root'
+  done
+
 # loop through config's machines and run against each 
 rm -f /tmp/.node_hosts
 for (( x=1; x<=$num_nodes; x++ ))
@@ -45,6 +56,7 @@ then
   cat grizzly_environment.js.bak > grizzly_environment.js
 else
   cat grizzly_environment.js > grizzly_environment.js.bak
+fi
 
 cat grizzly_environment.js | sed -e "s/\${internal_network}/"$PRIVATE_NETWORK"\/24/" > grizzly_environment.js.1
 cat grizzly_environment.js.1 | sed -e "s/\${public_network}/"$PUBLIC_NETWORK"\/24/" > grizzly_environment.js.2

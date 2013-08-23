@@ -9,8 +9,7 @@ git clone https://github.com/bluechiptek/bluechipstack.git /root/bluechipstack/;
 cp /vagrant/setuprc /root/bluechipstack/;
 
 # install chef server and the rackspace cookbooks
-# curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-chef-server.sh | bash;
-./openstack_chef_server.sh
+cat /root/bluechipstack/openstack_chef_server.sh | bash;
 curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/install-cookbooks.sh | bash;
 
 # generate a key for pushing to nodes
