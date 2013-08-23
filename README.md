@@ -39,7 +39,7 @@ The setup script provided in the repository will prompt you for a few variables,
 
     ./openstack_setup.sh
     
-Once the setup script finishes, you will have a *setuprc* file that will roughly look like:
+Once the setup script finishes, you will have a *setuprc* file that will look something like this:
 
     export NUMBER_NODES=3
     export NODE_1_HOSTNAME=nero
@@ -53,6 +53,14 @@ Once the setup script finishes, you will have a *setuprc* file that will roughly
     export PRIVATE_NETWORK=10.0.55.0
     export BRIDGE_INTERFACE=eth0
     
+Before you continue with the install, double check your network interface names on your nodes:
+
+	kord@nero:~$ ifconfig -a |grep Ethernet
+	br100     Link encap:Ethernet  HWaddr d4:3d:7e:33:f7:31  
+	eth0      Link encap:Ethernet  HWaddr d4:3d:7e:33:f7:31  
+    
+If you see an interface name that is different than **eth0**, be sure to edit the *setuprc* file and change the BRIDGE_INTERFACE value to the correctly named interface.  **Things will go horribly wrong later if you don't do this!**
+
 *Note: If you are using a Windows box, and [can't run bash scripts](http://www.cygwin.com/), you can move the*  **setuprc.example** *file  to*  **setuprc** *and edit as needed:*
 
     move C:\downloads\bluechipstack\setuprc.example C:\downloads\bluechipstack\setuprc
