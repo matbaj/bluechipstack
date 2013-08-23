@@ -40,6 +40,12 @@ for (( x=1; x<=$num_nodes; x++ ))
   done
 
 # modify our enviroment template
+if [ -f ./grizzly_environment.js.bak ]
+then
+  cat grizzly_environment.js.bak > grizzly_environment.js
+else
+  cat grizzly_environment.js > grizzly_environment.js.bak
+
 cat grizzly_environment.js | sed -e "s/\${internal_network}/"$PRIVATE_NETWORK"\/24/" > grizzly_environment.js.1
 cat grizzly_environment.js.1 | sed -e "s/\${public_network}/"$PUBLIC_NETWORK"\/24/" > grizzly_environment.js.2
 cat grizzly_environment.js.2 | sed -e "s/\${bridge_interface}/"$BRIDGE_INTERFACE"/" > grizzly_environment.js.3
