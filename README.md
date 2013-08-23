@@ -8,7 +8,8 @@ The scripts I've written build a Chef server inside a [Vagrant box](http://docs-
 ### Prerequisites for Install
 The new install scripts are [available for download](https://github.com/bluechiptek/bluechipstack) from BlueChip's Github account.  It is recommended you familiarize yourself first with the install process by watching the screencast below.
 
-INSERT VIDEO HERE
+[![ScreenShot](https://raw.github.com/bluechiptek/bluechipstack/master/openstack_movie.png)](http://vimeo.com/73001135)
+
 
 Before you start, make sure you have a minimum of one bare metal node running [Ubuntu Server 12.04](http://www.ubuntu.com/download/server).  If you are installing on more than one node, make sure all the nodes are on the [same private IP block](http://en.wikipedia.org/wiki/Private_network) and are able to talk to each other before proceeding.  All nodes will need Internet access via NAT provided by a DHCP server/router.
 
