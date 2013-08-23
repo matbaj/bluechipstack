@@ -1,5 +1,9 @@
 #!/bin/bash 
 
+# disable that stupid locale error
+sed '/AcceptEnv LANG LC_*/d' /etc/ssh/ssh_config > /tmp/ssh_config.tmp
+cp /tmp/ssh_config.tmp /etc/ssh/ssh_config
+
 # install git and curl
 apt-get -y install git;
 apt-get -y install curl;
