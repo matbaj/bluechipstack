@@ -1,7 +1,7 @@
 ## Installing OpenStack Grizzly in 10 Minutes
 [OpenStack](http://www.openstack.org/software/) provides a way to turn a group of bare metal servers into your own private cloud. It's been over a year since I published the first [Install OpenStack in 10 Minutes](http://www.stackgeek.com/guides/gettingstarted.html) guide and now, nearly 10K installs later, I'm pleased to announce the quickest and easiest way yet to get an OpenStack cluster running.
 
-Before we drop into the guide, I'd like to thank [Blue Chip Tek](http://bluechiptek.com) for providing hardware setup assistance, [Dell Computers](http://dell.com/) for donating the test hardware, and the awesome folks at [Rackspace](http://rackspace.com/) for writing and supporting the Chef scripts which are used for the bulk of the setup process.
+Before we drop into the guide, I'd like to thank [Blue Chip Tek](http://bluechiptek.com) for providing hardware advice and setup assistance, [Dell Computers](http://dell.com/) for donating the test hardware, and the awesome folks at [Rackspace](http://rackspace.com/) for writing and supporting the Chef scripts which are used for the bulk of the setup process.
 
 The scripts I've written build a Chef server inside a [Vagrant box](http://docs-v1.vagrantup.com/v1/docs/boxes.html), which ends up acting as a sort of 'raygun' to blast OpenStack onto the nodes.  Everyone knows [rayguns](https://www.google.com/search?q=raygun&safe=off) are awesome.
 
@@ -111,14 +111,16 @@ Once the deployment script completes, ssh to each node and manually run the Chef
     
 As you did earlier, replace **hostname** here with the actual hostname of each node.  Repeat this for each and every node in your cluster.  *Note: You may run these commands simultaneously across all nodes to speed up the process.*
 
-*Note: The first node in your cluster will be configured as an all-in-one controller.  This node will host the database for OpenStack, provide authentication, host the web UI, and perform network coordination.  The all-in-one node will also serve as a nova-compute node.  If you have more than one node in your cluster, the remainder of the nodes will be deployed as nova-compute nodes.*
+The first node in your cluster will be configured as an all-in-one controller.  This node will host the database for OpenStack, provide authentication, host the web UI, and perform network coordination.  The all-in-one node will also serve as a nova-compute node.  If you have more than one node in your cluster, the remainder of the nodes will be deployed as nova-compute nodes.
 
 ### Starting Instances
-Once the all-in-one node is provisioned, you should be able to log into the web UI for OpenStack.  Enter the IP address of the all-in-one node
+Once the all-in-one node is provisioned, you should be able to log into the web UI for OpenStack.  Enter the IP address of the all-in-one node, which should be the **NODE_1_IP** variable in your Chef server environment:
 
     http://10.0.1.73
                 
 The default user for the web UI is **admin** and the default password is **secrete**.
+
+You can refer to the [video guide](http://vimeo.com/41807514) for getting started using the UI.
 
 ### Troubleshooting
 If anything goes wrong with the install, be sure and ask for help.  The easiest way to get help is to [post in the forums](https://groups.google.com/forum/?fromgroups#!category-topic/stackgeek/openstack/_zbeGoOBg-Q).  Here are a few simple suggestions you can try:
