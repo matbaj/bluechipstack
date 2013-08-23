@@ -87,20 +87,24 @@ Now run the install script to print out the node configuration commands:
     ./openstack_install.sh
     
 ### Configuring the Nodes
-You will need to do some manual configuration of your nodes now.  The install script you just ran will dump out instructions and commands you can use to cut and paste and save time.  *Be sure to execute these commands from the Chef server!* 
+You will need to do some manual configuration of your nodes now.  The install script you just ran will dump out instructions and commands you can use to cut and paste and save time.
 
 **1. Begin by setting a temporary root password on each node:**
 
-    ssh user@hostname
-    sudo passwd root
-    exit
+    root@chef-server$ ssh user@hostname
+    user@hostname$ sudo passwd root	
+    [sudo] password for user: 
+	Enter new UNIX password: 
+	Retype new UNIX password: 
+	passwd: password updated successfully
+    user@hostname$ exit
     ...
     
 You will need to replace the **user** and **hostname** appropriate for your nodes and repeat these steps for each and every node you specified in the setup.  For each node, you will be prompted for your user password twice and the new root password twice.
 
 *Note: The scripts will take care of disabling the temporary root password after the keys are installed.*
 
-**2. Next, push the root key to each node:**
+**2. Next, push the root key to each node from the Chef server:**
 
     ssh-copy-id root@hostname
     ... 
