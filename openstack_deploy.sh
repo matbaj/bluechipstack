@@ -36,14 +36,16 @@ rm -f /tmp/.node_hosts
 for (( x=1; x<=$num_nodes; x++ ))
   do
     host="NODE_"$x"_HOSTNAME"
-    ./openstack_chef_client.sh ${!host}
+    #./openstack_chef_client.sh ${!host}
   done
 
 # modify our enviroment template
-cat grizzly_environment.js | sed -e "s/\${internal_network}/"$INTERNAL_NETWORK"/" > grizzly_environment.js
-cat grizzly_environment.js | sed -e "s/\${public_network}/"$PUBLIC_NETWORK"/" > grizzly_environment.js
-cat grizzly_environment.js | sed -e "s/\${bridge_interface}/"$BRIDGE_INTERFACE"/" > grizzly_environment.js
+cat grizzly_environment.js | sed -e "s/\${internal_network}/"$PRIVATE_NETWORK"\/24/" > grizzly_environment.js.1
+cat grizzly_environment.js.1 | sed -e "s/\${public_network}/"$PUBLIC_NETWORK"\/24/" > grizzly_environment.js.2
+cat grizzly_environment.js.2 | sed -e "s/\${bridge_interface}/"$BRIDGE_INTERFACE"/" > grizzly_environment.js.3
+cp grizzly_environment.js.3 grizzly_environment.js
+rm grizzly_environment.js.1 grizzly_environment.js.2 grizzly_environment.js.3
 
 # create and edit the environment for chef
-/opt/chef-server/bin/knife environment create grizzzly -d "OpenStack Grizzly via BlueChip Install"
-/opt/chef-server/bin/knife environment edit from file grizzly_environment.js
+#/opt/chef-server/bin/knife environment create grizzzly -d "OpenStack Grizzly via BlueChip Install"
+#/opt/chef-server/bin/knife environment edit from file grizzly_environment.js
