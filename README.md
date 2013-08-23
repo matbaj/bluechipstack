@@ -1,4 +1,4 @@
-## Installing OpenStack Grizzly in 15 Minutes
+## Installing OpenStack Grizzly in 10 Minutes
 It's been over a year since I published the [Install OpenStack in 10 Minutes](http://www.stackgeek.com/guides/gettingstarted.html) guide.  A year and nearly 10K installs later, I'm pleased to announce an even easier way to install OpenStack Grizzly.
 
 Before we drop in and begin our exciting journey down the virtualized rabbit hole, I'd like to thank [Blue Chip Tek](http://bluechiptek.com) for providing hardware setup assistance, [Dell Computers](http://dell.com/) for donating the test hardware, and the awesome folks at [Rackspace](http://rackspace.com/) for writing and supporting the Chef scripts which are used for the bulk of the setup process.
@@ -88,13 +88,10 @@ You'll need to replace the **user** and **hostname** and repeat these steps for 
 
 Again, you will need to replace **hostname** and repeat this for each node.  You will be prompted by the nodes for the root password you set in step 1 above.
 
-**3. Finally, update the /etc/hosts file and clear the root password for each node:**
-
-    scp /tmp/.node_hosts root@hostname:/root/.node_hosts
-    ssh root@hostname cat /root/.node_hosts >> /etc/hosts
-    ssh root@hostname rm /root/.node_hosts
-    ssh root@hostname passwd -l root
-
-And, once again, replace the **hostname** and repeat for each node.  No passwords required this time!
-
 ### Provision the Nodes
+don't forget the rerun of the knife exec -E 'nodes.transform("chef_environment:_default") \
+  { |n| n.chef_environment("grizzly") }'
+                
+                
+                almost done!
+                
