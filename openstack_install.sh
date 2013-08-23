@@ -34,6 +34,11 @@ for (( x=1; x<=$num_nodes; x++ ))
     echo "${!ip}	${!host}" >> /tmp/.node_hosts
   done
 
+# add chef-server entry
+PRIMARY_INTERFACE=eth1
+MY_IP=$(ip addr show dev ${PRIMARY_INTERFACE} | awk 'NR==3 {print $2}' | cut -d '/' -f1)
+echo $MY_IP"	chef-server" >> /tmp/.node_hosts
+
 echo "##########################################################################################################################"
 echo; 
 echo "The following steps must be done manually for each node in your cluster.  The commands are listed below for convenience."
