@@ -65,7 +65,7 @@ cat grizzly_environment.js.3 > grizzly_environment.js
 rm grizzly_environment.js.1 grizzly_environment.js.2 grizzly_environment.js.3
 
 # create and edit the environment for chef
-/opt/chef-server/bin/knife environment create grizzzly -d "OpenStack Grizzly via BlueChip Install"
+/opt/chef-server/bin/knife environment create grizzly -d "OpenStack Grizzly via BlueChip Install"
 /opt/chef-server/bin/knife environment from file grizzly_environment.js
 
 # transform bork bork!
