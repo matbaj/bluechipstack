@@ -41,9 +41,9 @@ for (( x=1; x<=$num_nodes; x++ ))
     ssh root@"${!host}" 'rm /root/.node_hosts'
     ssh root@"${!host}" 'passwd -l root'
   done
+rm -f /tmp/.node_hosts
 
 # loop through config's machines and run against each 
-rm -f /tmp/.node_hosts
 for (( x=1; x<=$num_nodes; x++ ))
   do
     host="NODE_"$x"_HOSTNAME"
@@ -66,7 +66,7 @@ rm grizzly_environment.js.1 grizzly_environment.js.2 grizzly_environment.js.3
 
 # create and edit the environment for chef
 /opt/chef-server/bin/knife environment create grizzzly -d "OpenStack Grizzly via BlueChip Install"
-/opt/chef-server/bin/knife environment edit from file grizzly_environment.js
+/opt/chef-server/bin/knife environment from file grizzly_environment.js
 
 # transform bork bork!
 /opt/chef-server/bin/knife exec -E 'nodes.transform("chef_environment:_default") { |n| n.chef_environment("grizzly") }'

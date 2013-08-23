@@ -1,6 +1,6 @@
 {
   "name": "grizzly",
-  "description": "",
+  "description": "OpenStack Grizzly via BlueChip Install",
   "cookbook_versions": {
   },
   "json_class": "Chef::Environment",

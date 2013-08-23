@@ -51,13 +51,15 @@ for (( x=1; x<=$num_nodes; x++ ))
   done
 echo;
 echo;
-echo "2. Push the ssh key to each of the "$num_nodes" nodes:"
+echo "2. Push the ssh key to each of the "$num_nodes" nodes and disable locale errors:"
 echo;
 for (( x=1; x<=$num_nodes; x++ ))
   do
     host="NODE_"$x"_HOSTNAME"
     ip="NODE_"$x"_IP"
     echo "    ssh-copy-id root@"${!host}
+    echo "    ssh "${!host}" locale-gen en_US.UTF-8"
+    echo "    ssh "${!host}" update-locale en_US.UTF-8"
   done
 echo;
 echo;
