@@ -91,7 +91,7 @@ You will need to do some manual configuration of your nodes now.  The install sc
 
 **1. Begin by setting a temporary root password on each node:**
 
-    root@chef-server$ ssh user@hostname
+    root@chef-server# ssh user@hostname
     user@hostname$ sudo passwd root	
     [sudo] password for user: 
 	Enter new UNIX password: 
@@ -118,8 +118,8 @@ The nodes are configured using the **knife** command and manually running the Ch
 
 Once the deployment script completes, ssh to each node and manually run the Chef client command to kick off the deployment install process:
 
-    ssh root@hostname
-    chef-client
+    root@chef-server# ssh root@hostname
+    root@hostname# chef-client
     ...
     
 As you did earlier, replace **hostname** here with the actual hostname of each node.  Repeat this for each and every node in your cluster.  *Note: You may run these commands simultaneously across all nodes to speed up the process.*
