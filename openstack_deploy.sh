@@ -81,3 +81,7 @@ for (( x=2; x<=$num_nodes; x++ ))
     /opt/chef-server/bin/knife node run_list add ${!host}  'role[single-compute]'
   done
 
+# transform bork bork!
+/opt/chef-server/bin/knife exec -E 'nodes.transform("chef_environment:_default") { |n| n.chef_environment("grizzly") }'
+
+
