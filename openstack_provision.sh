@@ -16,6 +16,9 @@ curl -s -L https://raw.github.com/rcbops/support-tools/master/chef-install/insta
 # generate a key for pushing to nodes
 ssh-keygen -N "" -f /root/.ssh/id_rsa
 
+# add path for knife
+echo "export PATH=$PATH:/opt/chef-server/bin/" >> /root/.bashrc
+
 # shout out to the user
 echo "=========================================================="
 echo "Vagrant Chef server provisioning is complete."
