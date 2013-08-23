@@ -45,6 +45,18 @@ else
 fi
 echo "export ROOT_PASSWD="$token >> setuprc
 
+# source that sucker
+. ./setuprc
+
+# tack on our other variables
+public_network=`echo $NODE_1_IP | cut -d"." -f1-3`
+echo "export PUBLIC_NETWORK="$public_network".0/24" >> setuprc
+echo "export PRIVATE_NETWORK=10.0.55.0/24" >> setuprc
+echo "export BRIDGE_INTERFACE=eth0" >> setuprc
+
+# source that sucker, again
+. ./setuprc
+
 echo;
 echo "#############################################################################################################"
 echo;
@@ -61,5 +73,4 @@ echo;
 echo "#############################################################################################################"
 echo;
 
-# lastly, source that sucker
-. ./setuprc
+

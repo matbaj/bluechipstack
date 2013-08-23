@@ -14,6 +14,8 @@ If you don't have Vagrant installed yet, you'll need to download both [Vagrant](
 
 Double click each package to run through the installation of both VirtualBox and on your local machine.
 
+Additionally, each of the nodes you'll be installing OpenStack on will needs to be running [Ubuntu Server 12.04](http://www.ubuntu.com/download/server) on it and be configured with an IP address which is available on your local network. 
+
 ### Download the Install Scripts
 Start a terminal on your machine and make sure you have *git* installed.  If you don't, you can [download it here](http://git-scm.com/downloads).  Make and move yourself into a directory of your choice:
 
@@ -70,7 +72,7 @@ Now run the install script to print the node configuration commands:
     ./openstack_install.sh
     
 ### Configuring the Nodes
-Each of the nodes you'll be installing to needs to be running [Ubuntu Server 12.04](http://www.ubuntu.com/download/server) on it, be connected to your local network, and have the IPs you specified earlier. The install script will dump out instructions and commands you can cut and paste to save time.  *Be sure to execute these commands from the Chef server!* 
+You will need to do some manual configuration of your nodes now.  The install script you just ran will dump out instructions and commands you can cut and paste to save time.  *Be sure to execute these commands from the Chef server!* 
 
 **1. Begin by setting a root password on each node:**
 
@@ -78,13 +80,13 @@ Each of the nodes you'll be installing to needs to be running [Ubuntu Server 12.
     sudo passwd root
     exit
     
-*Note: You'll need to replace the **user** and **hostname** and repeat these steps for each and every node you specified in the setup.  For each node, you will be prompted for your user password twice and the new root password twice.*
+You'll need to replace the **user** and **hostname** and repeat these steps for each and every node you specified in the setup.  For each node, you will be prompted for your user password twice and the new root password twice.
 
 **2. Next, push the root key to each node:**
 
     ssh-copy-id root@hostname
 
-*Note: Again, you will need to replace **hostname** and repeat this for each node.  You will be prompted by the nodes for the root password you set in step 1 above.*
+Again, you will need to replace **hostname** and repeat this for each node.  You will be prompted by the nodes for the root password you set in step 1 above.
 
 **3. Finally, update the /etc/hosts file and clear the root password for each node:**
 
@@ -92,7 +94,7 @@ Each of the nodes you'll be installing to needs to be running [Ubuntu Server 12.
     ssh root@hostname cat /root/.node_hosts >> /etc/hosts
     ssh root@hostname rm /root/.node_hosts
     ssh root@hostname passwd -l root
-    
-*Note: And, once again, replace the **hostname** and repeat for each node.  No passwords required this time!*
+
+And, once again, replace the **hostname** and repeat for each node.  No passwords required this time!
 
 ### Provision the Nodes

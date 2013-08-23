@@ -39,3 +39,11 @@ for (( x=1; x<=$num_nodes; x++ ))
     ./openstack_chef_client.sh ${!host}
   done
 
+# modify our enviroment template
+cat grizzly_environment.js | sed -e "s/\${internal_network}/"$INTERNAL_NETWORK"/" > grizzly_environment.js
+cat grizzly_environment.js | sed -e "s/\${public_network}/"$PUBLIC_NETWORK"/" > grizzly_environment.js
+cat grizzly_environment.js | sed -e "s/\${bridge_interface}/"$BRIDGE_INTERFACE"/" > grizzly_environment.js
+
+# create and edit the environment for chef
+/opt/chef-server/bin/knife environment create grizzzly -d "OpenStack Grizzly via BlueChip Install"
+/opt/chef-server/bin/knife environment edit from file grizzly_environment.js
