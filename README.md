@@ -53,7 +53,7 @@ Once the setup script finishes, you will have a *setuprc* file that will roughly
     export PRIVATE_NETWORK=10.0.55.0
     export BRIDGE_INTERFACE=eth0
     
-*Note: If you are using a Windows box, and [can't run bash scripts](http://www.cygwin.com/), you can move the **setuprc.example** file  to **setuprc** and edit as needed:*
+*Note: If you are using a Windows box, and [can't run bash scripts](http://www.cygwin.com/), you can move the*  **setuprc.example** *file  to*  **setuprc** *and edit as needed:*
 
     move C:\downloads\bluechipstack\setuprc.example C:\downloads\bluechipstack\setuprc
     edit C:\downloads\bluechipstack\setuprc
