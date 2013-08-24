@@ -1,9 +1,9 @@
 ## Installing OpenStack Grizzly in 10 Minutes
 [OpenStack](http://www.openstack.org/software/) provides a way to turn a group of bare metal servers into your own private cloud. It's been over a year since I published the first [Install OpenStack in 10 Minutes](http://www.stackgeek.com/guides/gettingstarted.html) guide and now, nearly 10K installs later, I'm pleased to announce the quickest and easiest way yet to get an OpenStack cluster running.
 
-Before we drop into the guide, I'd like to thank [Blue Chip Tek](http://bluechiptek.com) for providing hardware advice and setup assistance, [Dell Computers](http://dell.com/) for donating the test hardware, and the awesome folks at [Rackspace](http://rackspace.com/) for writing and supporting the Chef scripts which are used for the bulk of the setup process.
+Before we drop into the guide, I'd like to thank [Blue Chip Tek](http://bluechiptek.com) for providing hardware, advice and setup assistance, [Dell Computers](http://dell.com/) for donating the test hardware, and the awesome folks at [Rackspace](http://rackspace.com/) for writing and supporting the Chef scripts which are used for the bulk of the setup process.
 
-The scripts I've written build a Chef server inside a [Vagrant box](http://docs-v1.vagrantup.com/v1/docs/boxes.html), which ends up acting as a sort of 'raygun' to blast OpenStack onto the nodes.  Everyone knows [rayguns](https://www.google.com/search?q=raygun&safe=off) are awesome.
+The scripts I've written build a Chef server inside a [Vagrant box](http://vagrantup.com/), which ends up acting as a sort of 'raygun' to blast OpenStack onto the nodes.  Everyone knows [rayguns](https://www.google.com/search?q=raygun&safe=off) are awesome.
 
 ### Prerequisites for Install
 The new install scripts are [available for download](https://github.com/bluechiptek/bluechipstack) from BlueChip's Github account.  It is recommended you familiarize yourself first with the install process by watching the screencast below.
@@ -13,7 +13,7 @@ The new install scripts are [available for download](https://github.com/bluechip
 
 Before you start, make sure you have a minimum of one bare metal node running [Ubuntu Server 12.04](http://www.ubuntu.com/download/server).  If you are installing on more than one node, make sure all the nodes are on the [same private IP block](http://en.wikipedia.org/wiki/Private_network) and are able to talk to each other before proceeding.  All nodes will need Internet access via NAT provided by a DHCP server/router.
 
-If you don't have Vagrant installed on your computer (desktop/laptop) yet, you'll need to download both [Vagrant](http://downloads.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads):
+If you don't have Vagrant installed on your computer (desktop/laptop) yet, you'll need to download both [Vagrant](http://vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/):
 
 * Install VirtualBox 4.2.16 for [Windows](http://download.virtualbox.org/virtualbox/4.2.16/VirtualBox-4.2.16-86992-Win.exe) or [OSX](http://download.virtualbox.org/virtualbox/4.2.16/VirtualBox-4.2.16-86992-OSX.dmg) 
 
