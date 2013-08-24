@@ -1,9 +1,9 @@
 ## Installing OpenStack Grizzly in 10 Minutes
-[OpenStack](http://www.openstack.org/software/) provides a way to turn a group of bare metal servers into your own private cloud. It's been over a year since I published the first [Install OpenStack in 10 Minutes](http://www.stackgeek.com/guides/gettingstarted.html) guide and now, nearly 10K installs later, I'm pleased to announce the quickest and easiest way yet to get an OpenStack cluster running.
+The [OpenStack](http://www.openstack.org/software/) provides a way to turn bare metal servers into a private cloud. It's been over a year since I published the first [Install OpenStack in 10 Minutes](http://www.stackgeek.com/guides/gettingstarted.html) guide and now, nearly 10K installs later, I'm pleased to announce the quickest and easiest way yet to get an OpenStack cluster running.
 
-Before we drop into the guide, I'd like to thank [Blue Chip Tek](http://bluechiptek.com) for providing hardware, advice and setup assistance, [Dell Computers](http://dell.com/) for donating the test hardware, and the awesome folks at [Rackspace](http://rackspace.com/) for writing and supporting the Chef scripts which are used for the bulk of the setup process.
+Before we drop into the guide, I'd like to thank [Blue Chip Tek](http://bluechiptek.com) for providing hardware, advice and setup assistance, [Dell Computers](http://dell.com/) for donating the test hardware, and the awesome folks at [Rackspace](http://rackspace.com/) for writing and supporting the [Chef scripts](https://github.com/rcbops/chef-cookbooks) which are used for the bulk of the setup process.
 
-The scripts I've written build a Chef server inside a [Vagrant box](http://vagrantup.com/), which ends up acting as a sort of 'raygun' to blast OpenStack onto the nodes.  Everyone knows [rayguns](https://www.google.com/search?q=raygun&safe=off) are awesome.
+The scripts provided in this guide build a Chef server inside a [Vagrant box](http://vagrantup.com/), which ends up acting as a sort of 'raygun' to blast OpenStack onto the nodes.  Everyone knows [rayguns](https://www.google.com/search?q=raygun&safe=off) are awesome.
 
 ### Prerequisites for Install
 The new install scripts are [available for download](https://github.com/bluechiptek/bluechipstack) from BlueChip's Github account.  It is recommended you familiarize yourself first with the install process by watching the screencast below.
@@ -53,13 +53,13 @@ Once the setup script finishes, you will have a *setuprc* file that will look so
     export PRIVATE_NETWORK=10.0.55.0
     export BRIDGE_INTERFACE=eth0
     
-Before you continue with the install, double check your network interface names on your nodes:
+Before you continue with the install, double check the network interface names on your nodes:
 
 	kord@nero:~$ ifconfig -a |grep Ethernet
 	br100     Link encap:Ethernet  HWaddr d4:3d:7e:33:f7:31  
 	eth0      Link encap:Ethernet  HWaddr d4:3d:7e:33:f7:31  
     
-If you see an interface name that is different than **eth0**, be sure to edit the *setuprc* file and change the BRIDGE_INTERFACE value to the correctly named interface.  **Things will go horribly wrong later if you don't do this!**
+If your primary interface name is different than **eth0**, be sure to edit the *setuprc* file and change the **BRIDGE_INTERFACE** value to the correctly named interface.  Things will go horribly wrong later if you don't do this now!
 
 *Note: If you are using a Windows box, and [can't run bash scripts](http://www.cygwin.com/), you can move the*  **setuprc.example** *file  to*  **setuprc** *and edit as needed:*
 
@@ -71,7 +71,7 @@ The Chef server is built and started by the Vagrant manager and should take 5-10
 
     vagrant up
     
-*Note: If you have multiple network interfaces on your desktop or laptop, you will be prompted to choose one for the bridge.*
+*Note: If you have multiple network interfaces on your desktop or laptop, you will be prompted to choose one for the bridge that is created for the Vagrant server.*
 
 Once the Chef server is provisioned, ssh into it:
 
@@ -112,17 +112,19 @@ You will need to replace the **user** and **hostname** appropriate for your node
 As above, you will need to replace **hostname** with the node's actual hostname and then repeat this for each and every node in your cluster.  You will be prompted by the nodes for the root password you set in step 1 above.
 
 ### Delopy the Nodes
-The nodes are configured using the **knife** command and manually running the Chef client on each box.  Start the install of the client by typing the following from the Chef server:
+The deploy script installs the Chef client on all the nodes you specified in the *setuprc* file.  After the deploy script is done, manually running the chef-client command kicks off the install of OpenStack.  Start the install of the client by typing the following from the Chef server:
 
     ./openstack_deploy.sh
 
-Once the deployment script completes, ssh to each node and manually run the Chef client command to kick off the deployment install process:
+Once the deployment script completes, ssh to each node and manually run the Chef client command:
 
     root@chef-server# ssh root@hostname
     root@hostname# chef-client
     ...
     
-As you did earlier, replace **hostname** here with the actual hostname of each node.  Repeat this for each and every node in your cluster.  *Note: You may run these commands simultaneously across all nodes to speed up the process.*
+As you did earlier, replace **hostname** here with the actual hostname of each node.  Repeat this for each and every node in your cluster.  
+
+*Note: You may run these commands simultaneously across all nodes to speed up the process.*
 
 The first node in your cluster will be configured as an all-in-one controller.  This node will host the database for OpenStack, provide authentication, host the web UI, and perform network coordination.  The all-in-one node will also serve as a nova-compute node.  If you have more than one node in your cluster, the remainder of the nodes will be deployed as nova-compute nodes.
 
