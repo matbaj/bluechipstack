@@ -136,7 +136,7 @@ The default user for the web UI is **admin** and the default password is **secre
 You can refer to the [video guide](http://vimeo.com/41807514) for getting started using the UI.
 
 ### Troubleshooting
-If anything goes wrong with the install, be sure and ask for help.  The easiest way to get help is to [post in the forums](https://groups.google.com/forum/?fromgroups#!category-topic/stackgeek/openstack/_zbeGoOBg-Q).  Here are a few simple suggestions you can try:
+If anything goes wrong with the install, be sure to ask for help.  The easiest way to get help is to [post in the forums](https://groups.google.com/forum/?fromgroups#!category-topic/stackgeek/openstack/_zbeGoOBg-Q).  Here are a few simple suggestions you can try:
 
 **1. Check you can ping your nodes by name from the Chef server:**
 
