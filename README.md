@@ -122,9 +122,7 @@ Once the deployment script completes, ssh to each node and manually run the Chef
     root@hostname# chef-client
     ...
     
-As you did earlier, replace **hostname** here with the actual hostname of each node.  Repeat this for each and every node in your cluster.  
-
-*Note: You may run these commands simultaneously across all nodes to speed up the process.*
+As you did earlier, replace **hostname** here with the actual hostname of each node.  Repeat this for each and every node in your cluster.  **You may run these commands simultaneously on all nodes to speed up the install process.**
 
 The first node in your cluster will be configured as an all-in-one controller.  This node will host the database for OpenStack, provide authentication, host the web UI, and perform network coordination.  The all-in-one node will also serve as a nova-compute node.  If you have more than one node in your cluster, the remainder of the nodes will be deployed as nova-compute nodes.
 
