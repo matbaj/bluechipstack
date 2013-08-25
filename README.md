@@ -63,9 +63,10 @@ If your primary interface name is different than **eth0**, be sure to edit the *
 
 *Note: If you are using a Windows box, and [can't run bash scripts](http://www.cygwin.com/), you can move the*  **setuprc.example** *file  to*  **setuprc** *and edit as needed:*
 
-    move C:\downloads\bluechipstack\setuprc.example C:\downloads\bluechipstack\setuprc
-    edit C:\downloads\bluechipstack\setuprc
-  
+    move setuprc.example setuprc
+    notepad setuprc
+    dos2unix setuprc
+    
 ### Provision the Chef Server
 The Chef server is built and started by the Vagrant manager and should take 5-10 minutes to build on a fast box and connection.  Start the server by typing:
 
