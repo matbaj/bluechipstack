@@ -1,5 +1,5 @@
 ## Installing OpenStack Grizzly in 10 Minutes
-The [OpenStack](http://www.openstack.org/software/) provides a way to turn bare metal servers into a private cloud. It's been over a year since I published the first [Install OpenStack in 10 Minutes](http://www.stackgeek.com/guides/gettingstarted.html) guide and now, nearly 10K installs later, I'm pleased to announce the quickest and easiest way yet to get an OpenStack cluster running.
+The [OpenStack](http://www.openstack.org/software/) project provides a way to turn bare metal servers into a private cloud. It's been over a year since I published the first [Install OpenStack in 10 Minutes](http://www.stackgeek.com/guides/gettingstarted.html) guide and now, nearly 10K installs later, I'm pleased to announce the quickest and easiest way yet to get an OpenStack cluster running.
 
 Before we drop into the guide, I'd like to thank [Blue Chip Tek](http://bluechiptek.com) for providing hardware, advice and setup assistance, [Dell Computers](http://dell.com/) for donating the test hardware, and the awesome folks at [Rackspace](http://rackspace.com/) for writing and supporting the [Chef scripts](https://github.com/rcbops/chef-cookbooks) which are used for the bulk of the setup process.
 
