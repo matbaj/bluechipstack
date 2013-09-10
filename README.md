@@ -136,6 +136,31 @@ The default user for the web UI is **admin** and the default password is **secre
 
 You can refer to the [video guide](http://vimeo.com/41807514) for getting started using the UI.
 
+### Tweaking Configuration
+If you have any specific configuration you need to perform on your boxes, for example changing the contents of the nova.conf, then that can be done by modifying the recipes which were downloaded to your machine during setup.
+
+    cd /root/chef-cookbooks/cookbooks
+
+The config options are normally set in the attributes/default.rb file located inside the specific cookbooks. For example, to configure specific options involving nova you would edit the nova cookbook attributes file located at:
+
+    nano /root/chef-cookbooks/cookbooks/nova/attributes/default.rb
+
+From there you can configure specific options, for example if your machines do not support hardware virtualization you would change the virt_type setting:
+
+    default["nova"]["libvirt"]["virt_type"]
+
+Once you are done making changes to the server attributes you must then apply these changes before they will push out to the nodes:
+
+    knife cookbook upload *modified-cookbook-name-here* -o /root/chef-cookbooks/cookbooks
+
+If you edited multiple cookbooks and don't feel like specifying them one-by-one, you can simply re-upload the whole directory:
+
+    knife cookbook upload -a -o /root/chef-cookbooks/cookbooks
+
+Once you have finished applying the changes you can either wait for the servers to phone home and download the changes, or you can run the chef client command on each box via ssh.
+
+    chef-client --once
+
 ### Troubleshooting
 If anything goes wrong with the install, be sure to ask for help.  The easiest way to get help is to [post in the forums](https://groups.google.com/forum/?fromgroups#!category-topic/stackgeek/openstack/_zbeGoOBg-Q).  Here are a few simple suggestions you can try:
 
