@@ -1,5 +1,5 @@
 {
-  "name": "grizzly",
+  "name": "grizzly",  
   "description": "OpenStack Grizzly via BlueChip Install",
   "cookbook_versions": {
   },
@@ -9,8 +9,11 @@
   },
   "override_attributes": {
     "nova": {
-      "networks": [
-        {
+      "network": {
+          "public_interface": "br100"
+      },
+      "networks": {
+        "public": {
           "label": "public",
           "bridge_dev": "${bridge_interface}",
           "ipv4_cidr": "${internal_network}",
@@ -18,7 +21,7 @@
           "dns1": "8.8.4.4",
           "dns2": "8.8.8.8"
         }
-      ]
+      }
     },
     "mysql": {
       "allow_remote_root": true,
