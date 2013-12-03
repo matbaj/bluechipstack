@@ -59,7 +59,7 @@ else
 fi
 
 #PRIMARY_INTERFACE=$(ip route list match 0.0.0.0 | awk 'NR==1 {print $5}')
-PRIMARY_INTERFACE=eth1
+PRIMARY_INTERFACE=eth0
 MY_IP=$(ip addr show dev ${PRIMARY_INTERFACE} | awk 'NR==3 {print $2}' | cut -d '/' -f1)
 CHEF_UNIX_USER=${CHEF_UNIX_USER:-root}
 
