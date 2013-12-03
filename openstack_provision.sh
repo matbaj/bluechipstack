@@ -9,7 +9,7 @@ apt-get -y install git;
 apt-get -y install curl;
 
 # checkout scripts again to the chef server and copy config file over 
-git clone https://github.com/bluechiptek/bluechipstack.git /root/bluechipstack/;
+git clone https://github.com/matbaj/bluechipstack.git /root/bluechipstack/;
 cp /vagrant/setuprc /root/bluechipstack/;
 
 # install chef server and the rackspace cookbooks
